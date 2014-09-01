@@ -20,12 +20,7 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
-
-        <service
-            android:name=".SshService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
