@@ -22,10 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:20.0.0'
-    compile files('libs/sshj-0.8.1.jar')
-    compile files('libs/slf4j-android-1.7.7.jar')
-    compile files('libs/slf4j-api-1.7.7.jar')
-    compile files('libs/slf4j-simple-1.7.7.jar')
     compile files('libs/bcpkix-jdk15on-151.jar')
     compile files('libs/bcprov-jdk15on-151.jar')
+    compile files('libs/jsch-0.1.51.jar')
 }

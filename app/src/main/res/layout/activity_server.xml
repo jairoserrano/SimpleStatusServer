@@ -30,7 +30,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/edtusername"
         android:hint="Usuario"
-        android:inputType="text" />
+        android:inputType="text"
+        android:text="jairo" />
 
     <EditText
         android:layout_width="match_parent"
@@ -46,47 +47,12 @@
         android:layout_height="wrap_content"
         android:text="Conectar"
         android:id="@+id/button"
-        android:layout_gravity="right"
-        android:onClick="selfConnect" />
+        android:layout_gravity="center_horizontal" />
 
-    <TextView
+    <WebView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textLog"
-        android:layout_weight="0.14" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="189dp"
-        android:layout_gravity="center_horizontal" >
-
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Servidor encendido"
-            android:id="@+id/logStarted"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:checked="false" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/logMeminfo"
-            android:layout_below="@+id/logStarted"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/logCpuinfo"
-            android:layout_below="@+id/logMeminfo"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

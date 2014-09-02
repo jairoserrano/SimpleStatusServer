@@ -79,14 +79,11 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="slf4j-api-1.7.7" level="project" />
-    <orderEntry type="library" exported="" name="sshj-0.8.1" level="project" />
+    <orderEntry type="library" exported="" name="jsch-0.1.51" level="project" />
     <orderEntry type="library" exported="" name="bcpkix-jdk15on-151" level="project" />
     <orderEntry type="library" exported="" name="bcprov-jdk15on-151" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-20.0.0" level="project" />
-    <orderEntry type="library" exported="" name="slf4j-android-1.7.7" level="project" />
-    <orderEntry type="library" exported="" name="slf4j-simple-1.7.7" level="project" />
   </component>
 </module>
 
