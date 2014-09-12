@@ -50,7 +50,9 @@ public class ServerActivity extends Activity {
                 username.getText().toString(),
                 password.getText().toString()
         );
-        new openSSHConnection().execute(info);
+        //new openSSHConnection().execute(info);
+        Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
+        startActivity(intent);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class ServerActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

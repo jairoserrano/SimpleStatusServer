@@ -17,12 +17,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name=".MyActionBar"
             android:label="@string/title_activity_my_action_bar" >
+        </activity>
+        <activity
+            android:name=".AdicionarServidor"
+            android:label="@string/title_activity_adicionar_servidor" >
         </activity>
     </application>
 

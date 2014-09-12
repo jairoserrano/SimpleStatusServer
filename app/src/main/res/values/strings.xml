@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="ip_servidor">New Text</string>
     <string name="title_activity_my_action_bar">ServerActionBar</string>
+    <string name="title_activity_adicionar_servidor">AdicionarServidor</string>
 
 </resources>
