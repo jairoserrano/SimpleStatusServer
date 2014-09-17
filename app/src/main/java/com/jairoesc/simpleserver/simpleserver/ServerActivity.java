@@ -45,11 +45,11 @@ public class ServerActivity extends Activity {
 
     }
     public void ConnectClick(View v) {
-        ServerInfo info = new ServerInfo(
+        /*ServerInfo info = new ServerInfo(
                 hostname.getText().toString(),
                 username.getText().toString(),
                 password.getText().toString()
-        );
+        );*/
         //new openSSHConnection().execute(info);
         Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
         startActivity(intent);

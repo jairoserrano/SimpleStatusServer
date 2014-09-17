@@ -5,6 +5,7 @@ package com.jairoesc.simpleserver.simpleserver;
  */
 public class ServerInfo {
 
+    private Integer id;
     private String hostname;
     private String username;
     private String password;
@@ -20,6 +21,18 @@ public class ServerInfo {
         this.password = password;
         this.meminfo = new Double[3];
     }
+
+    ServerInfo() { }
+
+    @Override
+    public String toString() {
+        return "Server [id=" + id + ", hostname=" + this.hostname + ", username=" + this.username
+                + ", password=" + this.password + "]";
+    }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getHostname() {
         return hostname;

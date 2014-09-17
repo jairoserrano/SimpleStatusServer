@@ -12,6 +12,9 @@ public class AdicionarServidor extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_servidor);
+
+        ServerSQLiteHelper db = new ServerSQLiteHelper(this);
+        db.addServerInfo(new ServerInfo("grid.unitecnologica.edu.co","root","12345"));
     }
 
 

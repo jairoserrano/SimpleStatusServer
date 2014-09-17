@@ -7,5 +7,9 @@
     <string name="ip_servidor">New Text</string>
     <string name="title_activity_my_action_bar">ServerActionBar</string>
     <string name="title_activity_adicionar_servidor">AdicionarServidor</string>
+    <string name="add_server">Adicionar servidor</string>
+    <string name="save">Guardar</string>
+    <string name="select_server">Seleccionar</string>
+    <string name="conectar">Conectar</string>
 
 </resources>
