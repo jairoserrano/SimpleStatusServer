@@ -6,41 +6,28 @@
     android:paddingTop="20dp"
     android:paddingRight="10dp"
     android:paddingLeft="20dp"
-    android:weightSum="1"
-    android:background="#ffffffff"
-    android:onClick="setListFooter">
+    android:weightSum="1">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Spinner
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/select_server"
-        android:id="@+id/textView"
-        android:paddingBottom="20dp" />
+        android:id="@+id/spinner"
+        android:padding="5dp" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="66dp">
-
-        <Spinner
-            android:layout_width="233dp"
-            android:layout_height="51dp"
-            android:id="@+id/spinner" />
-
-        <Button
-            android:layout_width="124dp"
-            android:layout_height="wrap_content"
-            android:text="@string/conectar"
-            android:id="@+id/button"
-            android:layout_gravity="center_horizontal"
-            android:onClick="ConnectClick" />
-    </LinearLayout>
+    <Button
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:text="@string/conectar"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:onClick="ConnectClick"
+        android:layout_marginTop="10dp"
+        android:padding="10dp" />
 
     <WebView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/webView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_weight="0.89" />
 
 </LinearLayout>

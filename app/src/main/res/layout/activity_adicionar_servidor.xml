@@ -1,39 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.jairoesc.simpleserver.simpleserver.AdicionarServidor">
-
-    <TextView
-        android:text="@string/add_server"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+    tools:context="com.jairoesc.simpleserver.simpleserver.AdicionarServidor"
+    android:orientation="vertical">
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editText"
-        android:hint="Dirección del servidor"
-        android:text="grid.unitecnologica.edu.co"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:id="@+id/editText"
+            android:hint="Dirección del servidor"
+            android:text="grid.unitecnologica.edu.co"
+            android:autoText="false"
+        android:padding="10dp" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:hint="Usuario"
-        android:inputType="text"
-        android:text="jairo"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:hint="Usuario"
+            android:inputType="text"
+            android:text="jairo"
+        android:padding="10dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -43,16 +36,16 @@
         android:id="@+id/editText3"
         android:layout_gravity="center_horizontal"
         android:hint="Contraseña"
-        android:layout_below="@+id/editText2"
-        android:layout_centerHorizontal="true" />
+        android:padding="10dp"
+        android:autoText="false" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText3"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:id="@+id/button"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="SaveServerClick" />
 
-</RelativeLayout>
+</LinearLayout>

@@ -16,7 +16,7 @@ import java.util.List;
 public class ServerSQLiteHelper extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     // Database Name
     private static final String DATABASE_NAME = "ServesDB";
 
@@ -29,7 +29,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
-    static final String CREATE_SERVER_TABLE = "CREATE TABLE servers ( " +
+    static final String CREATE_SERVER_TABLE = "CREATE TABLE server ( " +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, hostname TEXT, "+
             "username TEXT, password TEXT )";
 
@@ -53,26 +53,21 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public void addServerInfo(ServerInfo server){
-        //for logging
+    public long createServer(ServerInfo server) {
+
         Log.d("addServer", server.toString());
 
-        // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
-        values.put(KEY_HOSTNAME, server.getHostname()); // get title
-        values.put(KEY_USERNAME, server.getUsername()); // get author
-        values.put(KEY_PASSWORD, server.getPassword()); // get author
+        values.put(KEY_HOSTNAME, server.getHostname());
+        values.put(KEY_USERNAME, server.getUsername());
+        values.put(KEY_PASSWORD, server.getPassword());
 
-        // 3. insert
-        db.insert(TABLE_SERVER, // table
-                null, //nullColumnHack
-                values); // key/value -> keys = column names/ values = column values
+        // insert row
+        long todo_id = db.insert(TABLE_SERVER, null, values);
 
-        // 4. close
-        db.close();
+        return todo_id;
     }
 
     public ServerInfo getServer(int id){
@@ -110,7 +105,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Get All ServerInfo
-    public List<ServerInfo> getAllServerInfo() {
+    public List<ServerInfo> getAllServers() {
         List<ServerInfo> ServerInfo = new LinkedList<ServerInfo>();
 
         // 1. build the query
@@ -135,7 +130,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllServerInfo()", ServerInfo.toString());
+        Log.d("getAllServers()", ServerInfo.toString());
 
         // return ServerInfo
         return ServerInfo;

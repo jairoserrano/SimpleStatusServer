@@ -10,19 +10,29 @@ public class ServerInfo {
     private String username;
     private String password;
     private String error;
-    private String cpuinfo;
-    private Double[] meminfo;
+    private String memRaw;
+    private String memFree;
+    private String memTotal;
+    private String memCache;
+    private String cpuRaw;
+    private String cpuTotal;
+    private String cpuUsage;
 
-    private boolean started;
+    private boolean hostStatus;
 
     ServerInfo(String hostname, String username, String password) {
-        this.hostname = hostname;
-        this.username = username;
-        this.password = password;
-        this.meminfo = new Double[3];
+        setHostname(hostname);
+        setUsername(username);
+        setPassword(password);
+        setMemFree("");
+        setMemTotal("");
+        setMemCache("");
+        setCpuTotal("");
+        setCpuUsage("");
     }
 
-    ServerInfo() { }
+    ServerInfo() {
+    }
 
     @Override
     public String toString() {
@@ -30,31 +40,87 @@ public class ServerInfo {
                 + ", password=" + this.password + "]";
     }
 
-    public Integer getId() { return id; }
+    public boolean isHostStatus() {
+        return hostStatus;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setHostStatus(boolean hostStatus) {
+        this.hostStatus = hostStatus;
+    }
+
+    public String getMemRaw() {
+        return memRaw;
+    }
+
+    public void setMemRaw(String memRaw) {
+        String[] linea = memRaw.split("\n");
+        linea[1] = linea[1].replaceAll("\\s+", " ");
+        String[] linea_exp = linea[1].split(" ");
+
+        setMemTotal(linea_exp[1].toString().trim());
+        setMemFree(linea_exp[3].toString().trim());
+        setMemCache(linea_exp[6].toString().trim());
+    }
+
+    public String getMemFree() {
+        return memFree;
+    }
+
+    public void setMemFree(String memFree) {
+        this.memFree = memFree;
+    }
+
+    public String getMemCache() {
+        return memCache;
+    }
+
+    public void setMemCache(String memCache) {
+        this.memCache = memCache;
+    }
+
+    public String getMemTotal() {
+        return memTotal;
+    }
+
+    public void setMemTotal(String memTotal) {
+        this.memTotal = memTotal;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getHostname() {
+
         return hostname;
     }
 
     public void setHostname(String hostname) {
+
         this.hostname = hostname;
     }
 
     public String getPassword() {
+
         return password;
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 
     public String getUsername() {
+
         return username;
     }
 
     public void setUsername(String username) {
+
         this.username = username;
     }
 
@@ -66,38 +132,28 @@ public class ServerInfo {
         this.error += error;
     }
 
-    public boolean getStarted() {
-        return this.started;
+    public String getCpuUsage() {
+        return cpuUsage;
     }
 
-    public void setStarted(boolean started) {
-        this.started = started;
+    public void setCpuUsage(String cpuUsage) {
+        this.cpuUsage = cpuUsage;
     }
 
-    public Double[] getMeminfo() {
-        return this.meminfo;
+    public String getCpuRaw() {
+        return cpuRaw;
     }
 
-    public void setMeminfo(String rawMeminfo) {
-        String[] linea = rawMeminfo.split("\n");
-
-        linea[1] = linea[1].replaceAll("\\s+", " ");
-        String[] linea_exp = linea[1].split(" ");
-        //memoria Total
-        this.meminfo[0] = Double.parseDouble(linea_exp[1].toString().trim());
-        //memoria libre real
-        this.meminfo[1] = Double.parseDouble(linea_exp[3].toString().trim());
-        //memoria cacheada
-        this.meminfo[2] = Double.parseDouble(linea_exp[6].toString().trim());
-
+    public void setCpuRaw(String cpuRaw) {
+        this.cpuRaw = cpuRaw;
     }
 
-    public String getCpuinfo() {
-        return this.cpuinfo;
+    public String getCpuTotal() {
+        return cpuTotal;
     }
 
-    public void setCpuinfo(String cpuinfo) {
-        this.cpuinfo = cpuinfo;
+    public void setCpuTotal(String cpuTotal) {
+        this.cpuTotal = cpuTotal;
     }
 
 }
