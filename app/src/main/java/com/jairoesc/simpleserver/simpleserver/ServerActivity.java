@@ -32,6 +32,7 @@ public class ServerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
 
@@ -54,7 +55,7 @@ public class ServerActivity extends Activity {
         //ServerInfo info = new ServerInfo("","","");
         //new openSSHConnection().execute(info);
         Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
-        startActivity(intent);
+        startActivityForResult(intent,RESULT_OK);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older ServerInfo table if existed
-        db.execSQL("DROP TABLE IF EXISTS servers");
+        db.execSQL("DROP TABLE IF EXISTS server");
         // create fresh ServerInfo table
         this.onCreate(db);
     }
@@ -65,9 +65,9 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         values.put(KEY_PASSWORD, server.getPassword());
 
         // insert row
-        long todo_id = db.insert(TABLE_SERVER, null, values);
+        long server_id = db.insert(TABLE_SERVER, null, values);
 
-        return todo_id;
+        return server_id;
     }
 
     public ServerInfo getServer(int id){

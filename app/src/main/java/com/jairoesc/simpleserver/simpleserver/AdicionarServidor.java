@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 
 public class AdicionarServidor extends Activity {
@@ -20,7 +21,13 @@ public class AdicionarServidor extends Activity {
     public void SaveServerClick(View v) {
         Log.v("AdicionarServidor", "Guardando");
         ServerSQLiteHelper db = new ServerSQLiteHelper(this);
-        //db.createServer(new ServerInfo("grid.unitecnologica.edu.co","root","12345"));
+
+        EditText hostname = (EditText) findViewById(R.id.hostname);
+        EditText username = (EditText) findViewById(R.id.username);
+        EditText password = (EditText) findViewById(R.id.password);
+
+        db.createServer(new ServerInfo(hostname.getText().toString(),username.getText().toString(),password.getText().toString()));
+
         Intent intent = new Intent(getApplicationContext(), ServerActivity.class);
         startActivity(intent);
     }
@@ -42,5 +49,11 @@ public class AdicionarServidor extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        finishActivity(RESULT_OK);
+        super.onDestroy();
     }
 }

@@ -36,8 +36,7 @@ public class ServerInfo {
 
     @Override
     public String toString() {
-        return "Server [id=" + id + ", hostname=" + this.hostname + ", username=" + this.username
-                + ", password=" + this.password + "]";
+        return this.username+"@"+this.hostname;
     }
 
     public boolean isHostStatus() {
