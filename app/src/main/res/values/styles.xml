@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="CustomEditTextErrorStyle">
+        <item name="android:textColorHint" >#FF3300</item>
+    </style>
+
 </resources>

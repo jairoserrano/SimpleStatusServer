@@ -21,7 +21,7 @@
             android:label="@string/title_activity_my_action_bar" >
         </activity>
         <activity
-            android:name=".AdicionarServidor"
+            android:name=".AddServerToDB"
             android:label="@string/title_activity_adicionar_servidor" >
         </activity>
     </application>

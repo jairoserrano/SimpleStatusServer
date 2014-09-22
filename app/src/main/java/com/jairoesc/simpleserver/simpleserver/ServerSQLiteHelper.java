@@ -53,7 +53,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public long createServer(ServerInfo server) {
+    public long createServer(HostnameInformation server) {
 
         Log.d("addServer", server.toString());
 
@@ -70,7 +70,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         return server_id;
     }
 
-    public ServerInfo getServer(int id){
+    public HostnameInformation getServer(int id){
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
@@ -91,7 +91,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         // 4. build ServerInfo object
-        ServerInfo server = new ServerInfo();
+        HostnameInformation server = new HostnameInformation();
         server.setId(Integer.parseInt(cursor.getString(0)));
         server.setHostname(cursor.getString(1));
         server.setUsername(cursor.getString(2));
@@ -105,8 +105,8 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Get All ServerInfo
-    public List<ServerInfo> getAllServers() {
-        List<ServerInfo> ServerInfo = new LinkedList<ServerInfo>();
+    public List<HostnameInformation> getAllServers() {
+        List<HostnameInformation> HostnameInformation = new LinkedList<HostnameInformation>();
 
         // 1. build the query
         String query = "SELECT  * FROM " + TABLE_SERVER;
@@ -116,45 +116,45 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(query, null);
 
         // 3. go over each row, build ServerInfo and add it to list
-        ServerInfo server = null;
+        HostnameInformation server = null;
         if (cursor.moveToFirst()) {
             do {
-                server = new ServerInfo();
+                server = new HostnameInformation();
                 server.setId(Integer.parseInt(cursor.getString(0)));
                 server.setHostname(cursor.getString(1));
                 server.setUsername(cursor.getString(2));
                 server.setPassword(cursor.getString(3));
                 
                 // Add ServerInfo to ServerInfo
-                ServerInfo.add(server);
+                HostnameInformation.add(server);
             } while (cursor.moveToNext());
         }
 
-        Log.d("getAllServers()", ServerInfo.toString());
+        Log.d("getAllServers()", HostnameInformation.toString());
 
         // return ServerInfo
-        return ServerInfo;
+        return HostnameInformation;
     }
 
     // Updating single ServerInfo
-    public int updateServerInfo(ServerInfo ServerInfo) {
+    public int updateServerInfo(HostnameInformation HostnameInformation) {
 
-        // 1. get reference to writable DB
+        // Instancia de la DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. create ContentValues to add key "column"/value
+        // Actualización del registro
         ContentValues values = new ContentValues();
-        values.put("hostname", ServerInfo.getHostname()); // get title
-        values.put("username", ServerInfo.getUsername()); // get author
-        values.put("password", ServerInfo.getPassword()); // get author
+        values.put("hostname", HostnameInformation.getHostname()); // get title
+        values.put("username", HostnameInformation.getUsername()); // get author
+        values.put("password", HostnameInformation.getPassword()); // get author
 
-        // 3. updating row
+        // Actualizar el registro
         int i = db.update(TABLE_SERVER, //table
                 values, // column/value
                 KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(ServerInfo.getId()) }); //selection args
+                new String[] { String.valueOf(HostnameInformation.getId()) }); //selection args
 
-        // 4. close
+        // 4. Cerrar la DB
         db.close();
 
         return i;
@@ -162,20 +162,19 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     }
 
     // Deleting single ServerInfo
-    public void deleteServerInfo(ServerInfo ServerInfo) {
+    public void deleteServerInfo(HostnameInformation HostnameInformation) {
 
-        // 1. get reference to writable DB
+        // Instancia de la DB
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // 2. delete
-        db.delete(TABLE_SERVER,
-                KEY_ID+" = ?",
-                new String[] { String.valueOf(ServerInfo.getId()) });
+        // Eliminar
+        db.delete(TABLE_SERVER, KEY_ID+" = ?",
+                new String[] { String.valueOf(HostnameInformation.getId()) });
 
-        // 3. close
+        // Cerrar la DB
         db.close();
 
-        Log.d("deleteServerInfo", ServerInfo.toString());
+        Log.d("deleteServerInfo", HostnameInformation.toString());
 
     }
 

@@ -8,53 +8,41 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.TextView;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class ServerActivity extends Activity {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.fillSpinner();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
+        this.fillSpinner();
+    }
 
+    protected void fillSpinner() {
         ServerSQLiteHelper db = new ServerSQLiteHelper(this);
-
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        List<ServerInfo> list = db.getAllServers();
-
-        ArrayAdapter<ServerInfo> dataAdapter = new ArrayAdapter<ServerInfo>
+        List<HostnameInformation> list = db.getAllServers();
+        ArrayAdapter<HostnameInformation> dataAdapter = new ArrayAdapter<HostnameInformation>
                 (this, android.R.layout.simple_spinner_item,list);
-
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(dataAdapter);
-
-
     }
+
     public void ConnectClick(View v) {
         //ServerInfo info = new ServerInfo("","","");
         //new openSSHConnection().execute(info);
-        Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
+        Intent intent = new Intent(getApplicationContext(), AddServerToDB.class);
         startActivityForResult(intent,RESULT_OK);
     }
 
@@ -72,22 +60,22 @@ public class ServerActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), AdicionarServidor.class);
+            Intent intent = new Intent(getApplicationContext(), AddServerToDB.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private class openSSHConnection extends AsyncTask<ServerInfo, Void, ServerInfo> {
+    private class openSSHConnection extends AsyncTask<HostnameInformation, Void, HostnameInformation> {
 
         @Override
-        protected ServerInfo doInBackground(ServerInfo... info) {
+        protected HostnameInformation doInBackground(HostnameInformation... info) {
             SSHConnection conn = new SSHConnection(info[0]);
             info[0] = conn.CaptureOutput("free -m");
             return info[0];
         }
 
-        protected void onPostExecute(ServerInfo info) {
+        protected void onPostExecute(ServerData info) {
             //WebView webview = (WebView) findViewById(R.id.webView);
             String content = "<html>"
                     + "  <head>"

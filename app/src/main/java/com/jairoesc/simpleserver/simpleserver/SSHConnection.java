@@ -14,18 +14,23 @@ import java.io.InputStream;
  */
 public class SSHConnection {
 
-    ServerInfo _info;
+    ServerData _data;
+    HostnameInformation _server;
 
-    SSHConnection(ServerInfo info){
-        this._info = info;
+    SSHConnection(HostnameInformation server){
+
+        this._server = server;
+        this._data = new ServerData();
+        this._data.setHostname(this._server.getHostname());
+        this._data.setUsername(this._server.getUsername());
     }
 
-    ServerInfo CaptureOutput(String command) {
+    ServerData CaptureOutput(String command) {
         try {
             JSch jsch = new JSch();
 
-            Session session = jsch.getSession(_info.getUsername(), _info.getHostname(), 22);
-            session.setPassword(_info.getPassword());
+            Session session = jsch.getSession(_server.getUsername(), _server.getHostname(), 22);
+            session.setPassword(_server.getPassword());
 
             java.util.Properties config = new java.util.Properties();
             config.put("StrictHostKeyChecking", "no");
@@ -44,26 +49,26 @@ public class SSHConnection {
                 while (in.available() > 0) {
                     int i = in.read(tmp, 0, 1024);
                     if (i < 0) break;
-                    _info.setMemRaw(new String(tmp, 0, i));
+                    _data.setMemRaw(new String(tmp, 0, i));
                 }
                 if (channel.isClosed()) {
                     if (in.available() > 0) continue;
-                    _info.setError("exit-status: " + channel.getExitStatus());
+                    _data.setError("exit-status: " + channel.getExitStatus());
                     break;
                 }
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {
-                    _info.setError(e.getMessage());
+                    _data.setError(e.getMessage());
                 }
             }
             channel.disconnect();
             session.disconnect();
         } catch (JSchException e) {
-            _info.setError(e.getMessage());
+            _data.setError(e.getMessage());
         } catch (IOException e) {
-            _info.setError(e.getMessage());
+            _data.setError(e.getMessage());
         }
-        return _info;
+        return _data;
     }
 }
