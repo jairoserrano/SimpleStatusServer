@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jairoesc.simpleserver.simpleserver" >
+    package="com.jairoesc.simpleserver.simpleserver">
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
+        <uses-sdk android:minSdkVersion="19" />
+
         <activity
             android:name=".ServerActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MyActionBar"
-            android:label="@string/title_activity_my_action_bar" >
-        </activity>
-        <activity
             android:name=".AddServerToDB"
-            android:label="@string/title_activity_adicionar_servidor" >
-        </activity>
+            android:label="@string/title_activity_adicionar_servidor"></activity>
     </application>
-
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

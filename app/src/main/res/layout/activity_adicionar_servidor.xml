@@ -10,32 +10,23 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="202dp"
-        android:layout_height="0dp"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ic_launcher"
-        android:layout_weight="0.44"
-        android:layout_marginBottom="30dp" />
-
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/hostname"
-            android:hint="Dirección del servidor"
-            android:text="grid.unitecnologica.edu.co"
-            android:autoText="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:id="@+id/hostname"
+        android:hint="Dirección del servidor"
+        android:text="grid.unitecnologica.edu.co"
+        android:autoText="false"
         android:padding="10dp" />
 
     <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:hint="Usuario"
-            android:inputType="text"
-            android:text="jairo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:hint="Usuario"
+        android:inputType="text"
+        android:text="jairo"
         android:padding="10dp" />
 
     <EditText
@@ -50,10 +41,10 @@
         android:autoText="false" />
 
     <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:id="@+id/button"
         android:padding="10dp"
         android:layout_gravity="center_horizontal"
         android:onClick="SaveServerClick"

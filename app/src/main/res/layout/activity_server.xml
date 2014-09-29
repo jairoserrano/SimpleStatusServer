@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -8,13 +7,12 @@
     android:paddingLeft="20dp"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/ic_launcher"
-        android:layout_weight="0.13" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/connect_to"
+        android:id="@+id/tvConnectTo" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -22,14 +20,20 @@
         android:id="@+id/spinner"
         android:padding="5dp" />
 
-    <Button
-        android:layout_width="122dp"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/conectar"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal"
-        android:onClick="ConnectClick"
-        android:layout_marginTop="10dp"
-        android:padding="10dp" />
+        android:paddingTop="50dp">
+
+        <Button
+            android:layout_width="122dp"
+            android:layout_height="wrap_content"
+            android:text="@string/addhost"
+            android:id="@+id/button"
+            android:layout_gravity="center_horizontal"
+            android:onClick="ConnectClick"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -30,10 +30,10 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
     private static final String KEY_PASSWORD = "password";
 
     static final String CREATE_SERVER_TABLE = "CREATE TABLE server ( " +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, hostname TEXT, "+
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, hostname TEXT, " +
             "username TEXT, password TEXT )";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_HOSTNAME,KEY_USERNAME,KEY_PASSWORD};
+    private static final String[] COLUMNS = {KEY_ID, KEY_HOSTNAME, KEY_USERNAME, KEY_PASSWORD};
 
     public ServerSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -70,7 +70,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         return server_id;
     }
 
-    public HostnameInformation getServer(int id){
+    public HostnameInformation getServer(long id) {
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
@@ -80,7 +80,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
                 db.query(TABLE_SERVER, // a. table
                         COLUMNS, // b. column names
                         " id = ?", // c. selections
-                        new String[] { String.valueOf(id) }, // d. selections args
+                        new String[]{String.valueOf(id)}, // d. selections args
                         null, // e. group by
                         null, // f. having
                         null, // g. order by
@@ -98,7 +98,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         server.setPassword(cursor.getString(3));
 
         //log
-        Log.d("getServer("+id+")", server.toString());
+        Log.d("getServer(" + id + ")", server.toString());
 
         // 5. return ServerInfo
         return server;
@@ -124,7 +124,7 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
                 server.setHostname(cursor.getString(1));
                 server.setUsername(cursor.getString(2));
                 server.setPassword(cursor.getString(3));
-                
+
                 // Add ServerInfo to ServerInfo
                 HostnameInformation.add(server);
             } while (cursor.moveToNext());
@@ -151,8 +151,8 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         // Actualizar el registro
         int i = db.update(TABLE_SERVER, //table
                 values, // column/value
-                KEY_ID+" = ?", // selections
-                new String[] { String.valueOf(HostnameInformation.getId()) }); //selection args
+                KEY_ID + " = ?", // selections
+                new String[]{String.valueOf(HostnameInformation.getId())}); //selection args
 
         // 4. Cerrar la DB
         db.close();
@@ -168,8 +168,8 @@ public class ServerSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Eliminar
-        db.delete(TABLE_SERVER, KEY_ID+" = ?",
-                new String[] { String.valueOf(HostnameInformation.getId()) });
+        db.delete(TABLE_SERVER, KEY_ID + " = ?",
+                new String[]{String.valueOf(HostnameInformation.getId())});
 
         // Cerrar la DB
         db.close();

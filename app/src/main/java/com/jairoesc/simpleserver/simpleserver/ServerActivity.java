@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -26,17 +29,41 @@ public class ServerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
         this.fillSpinner();
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.v("demo", "aja esa era " + i + " " + adapterView.getSelectedItemId());
+
+                ServerSQLiteHelper dbinfo = new ServerSQLiteHelper(getBaseContext());
+                HostnameInformation data = dbinfo.getServer(1);
+
+                Log.v("demo", data.getUsername());
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     protected void fillSpinner() {
         ServerSQLiteHelper db = new ServerSQLiteHelper(this);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        TextView tvConnectTo = (TextView) findViewById(R.id.tvConnectTo);
         List<HostnameInformation> list = db.getAllServers();
-        ArrayAdapter<HostnameInformation> dataAdapter = new ArrayAdapter<HostnameInformation>
-                (this, android.R.layout.simple_spinner_item,list);
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
+        if (list.isEmpty()) {
+            spinner.setVisibility(View.INVISIBLE);
+            tvConnectTo.setVisibility(View.INVISIBLE);
+        } else {
+            ArrayAdapter<HostnameInformation> dataAdapter = new ArrayAdapter<HostnameInformation>
+                    (this, android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(dataAdapter);
+        }
     }
 
     public void ConnectClick(View v) {
