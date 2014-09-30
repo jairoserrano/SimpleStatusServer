@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddServerToDB"
+            android:name=".ServerActivityAdd"
             android:label="@string/title_activity_adicionar_servidor"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

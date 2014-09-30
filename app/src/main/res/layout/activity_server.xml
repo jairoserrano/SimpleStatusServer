@@ -24,7 +24,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="50dp">
+        android:paddingTop="20dp">
 
         <Button
             android:layout_width="122dp"
@@ -32,8 +32,14 @@
             android:text="@string/addhost"
             android:id="@+id/button"
             android:layout_gravity="center_horizontal"
-            android:onClick="ConnectClick"
+            android:onClick="AddHostClick"
             android:layout_marginTop="10dp" />
     </LinearLayout>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

@@ -8,11 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -37,9 +38,11 @@ public class ServerActivity extends Activity {
                 Log.v("demo", "aja esa era " + i + " " + adapterView.getSelectedItemId());
 
                 ServerSQLiteHelper dbinfo = new ServerSQLiteHelper(getBaseContext());
-                HostnameInformation data = dbinfo.getServer(1);
+                ServerDataPrivate data = dbinfo.getServer(0);
 
                 Log.v("demo", data.getUsername());
+
+                new openSSHConnection().execute(data);
 
             }
 
@@ -54,56 +57,52 @@ public class ServerActivity extends Activity {
         ServerSQLiteHelper db = new ServerSQLiteHelper(this);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         TextView tvConnectTo = (TextView) findViewById(R.id.tvConnectTo);
-        List<HostnameInformation> list = db.getAllServers();
+        WebView webview = (WebView) findViewById(R.id.webView);
+        List<ServerDataPrivate> list = db.getAllServers();
         if (list.isEmpty()) {
             spinner.setVisibility(View.INVISIBLE);
             tvConnectTo.setVisibility(View.INVISIBLE);
+            webview.setVisibility(View.INVISIBLE);
         } else {
-            ArrayAdapter<HostnameInformation> dataAdapter = new ArrayAdapter<HostnameInformation>
+            ArrayAdapter<ServerDataPrivate> dataAdapter = new ArrayAdapter<ServerDataPrivate>
                     (this, android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
         }
     }
 
-    public void ConnectClick(View v) {
-        //ServerInfo info = new ServerInfo("","","");
-        //new openSSHConnection().execute(info);
-        Intent intent = new Intent(getApplicationContext(), AddServerToDB.class);
-        startActivityForResult(intent,RESULT_OK);
+    public void AddHostClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), ServerActivityAdd.class);
+        startActivity(intent);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.server, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(getApplicationContext(), AddServerToDB.class);
+            Intent intent = new Intent(getApplicationContext(), ServerActivityAdd.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private class openSSHConnection extends AsyncTask<HostnameInformation, Void, HostnameInformation> {
+    private class openSSHConnection extends AsyncTask<ServerDataPrivate, Void, ServerDataPrivate> {
 
         @Override
-        protected HostnameInformation doInBackground(HostnameInformation... info) {
+        protected ServerDataPrivate doInBackground(ServerDataPrivate... info) {
             SSHConnection conn = new SSHConnection(info[0]);
             info[0] = conn.CaptureOutput("free -m");
             return info[0];
         }
 
         protected void onPostExecute(ServerData info) {
-            //WebView webview = (WebView) findViewById(R.id.webView);
+            WebView webview = (WebView) findViewById(R.id.webView);
             String content = "<html>"
                     + "  <head>"
                     + "    <script type='text/javascript' src='https://www.google.com/jsapi'></script>"
@@ -130,10 +129,10 @@ public class ServerActivity extends Activity {
                     + "    <div id='piechart' style='width: 49%; height: 100%; float:left;'></div>"
                     + "  </body>" + "</html>";
             Log.v("proceso",content);
-            //WebSettings webSettings = webview.getSettings();
-            //webSettings.setJavaScriptEnabled(true);
-            //webview.requestFocusFromTouch();
-            //webview.loadDataWithBaseURL( "file:///android_asset/", content, "text/html", "utf-8", null );
+            WebSettings webSettings = webview.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            webview.requestFocusFromTouch();
+            webview.loadDataWithBaseURL( "file:///android_asset/", content, "text/html", "utf-8", null );
         }
 
     }

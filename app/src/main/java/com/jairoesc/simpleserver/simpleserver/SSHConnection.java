@@ -15,9 +15,9 @@ import java.io.InputStream;
 public class SSHConnection {
 
     ServerData _data;
-    HostnameInformation _server;
+    ServerDataPrivate _server;
 
-    SSHConnection(HostnameInformation server){
+    SSHConnection(ServerDataPrivate server){
 
         this._server = server;
         this._data = new ServerData();

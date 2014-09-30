@@ -9,12 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 
 
-public class AddServerToDB extends Activity {
+public class ServerActivityAdd extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adicionar_servidor);
+        setContentView(R.layout.activity_server_add);
     }
 
     public void SaveServerClick(View v) {
@@ -43,7 +43,7 @@ public class AddServerToDB extends Activity {
             ServerSQLiteHelper db = new ServerSQLiteHelper(this);
             //Creación en la DB del hostna
             // me
-            db.createServer(new HostnameInformation(hostname, username, password));
+            db.createServer(new ServerDataPrivate(hostname, username, password));
             //forma correcta de cerrar una actividad.
             finish();
         }

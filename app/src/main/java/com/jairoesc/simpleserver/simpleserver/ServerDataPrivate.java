@@ -3,20 +3,20 @@ package com.jairoesc.simpleserver.simpleserver;
 /**
  * Created by jairo on 1/09/14.
  */
-public class HostnameInformation {
+public class ServerDataPrivate {
 
     private Integer id;
     protected String hostname;
     protected String username;
     private String password;
 
-    public HostnameInformation(String hostname, String username, String password) {
+    public ServerDataPrivate(String hostname, String username, String password) {
         setHostname(hostname);
         setUsername(username);
         setPassword(password);
     }
 
-    public HostnameInformation() {
+    public ServerDataPrivate() {
     }
 
     @Override

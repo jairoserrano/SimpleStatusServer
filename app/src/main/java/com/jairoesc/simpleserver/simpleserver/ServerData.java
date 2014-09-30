@@ -3,7 +3,7 @@ package com.jairoesc.simpleserver.simpleserver;
 /**
  * Created by jairo on 1/09/14.
  */
-public class ServerData extends HostnameInformation {
+public class ServerData extends ServerDataPrivate {
 
     private String error;
     private String memRaw;
