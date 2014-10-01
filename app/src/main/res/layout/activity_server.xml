@@ -29,17 +29,95 @@
         <Button
             android:layout_width="122dp"
             android:layout_height="wrap_content"
-            android:text="@string/addhost"
+            android:text="@string/connect_bt"
             android:id="@+id/button"
             android:layout_gravity="center_horizontal"
-            android:onClick="AddHostClick"
+            android:onClick="ConnectClick"
             android:layout_marginTop="10dp" />
     </LinearLayout>
 
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webView"
-        android:layout_gravity="center_horizontal" />
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:progress="0"
+        android:indeterminate="false" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.64"
+        android:id="@+id/infopanel">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/memtotal_tx"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:background="@android:color/holo_orange_dark"
+                android:paddingLeft="10dp"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/memfree_tx"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:textSize="30dp"
+                android:background="@android:color/holo_green_dark" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="70"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/uptime_tx"
+                android:background="@android:color/holo_blue_light"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:paddingLeft="10dp"
+                android:textSize="15dp"
+                android:maxWidth="100dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="80"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:id="@+id/cpu_tx"
+                android:background="@android:color/holo_blue_dark"
+                android:paddingLeft="10dp"
+                android:paddingTop="60dp"
+                android:paddingBottom="60dp" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

@@ -9,8 +9,8 @@
     <string name="add_server">Adicionar servidor</string>
     <string name="save">Guardar</string>
     <string name="select_server">Seleccionar</string>
-    <string name="conectar">Conectar</string>
     <string name="addhost">Adicionar</string>
     <string name="connect_to">Conectar a:</string>
+    <string name="connect_bt">Conectar</string>
 
 </resources>

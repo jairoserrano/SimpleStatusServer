@@ -12,15 +12,18 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class ServerActivity extends Activity {
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onPostResume() {
+        super.onPostResume();
         this.fillSpinner();
     }
 
@@ -30,50 +33,41 @@ public class ServerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
         this.fillSpinner();
-
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.v("demo", "aja esa era " + i + " " + adapterView.getSelectedItemId());
-
-                ServerSQLiteHelper dbinfo = new ServerSQLiteHelper(getBaseContext());
-                ServerDataPrivate data = dbinfo.getServer(0);
-
-                Log.v("demo", data.getUsername());
-
-                new openSSHConnection().execute(data);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        TableLayout infopanel = (TableLayout) findViewById(R.id.infopanel);
+        //infopanel.setVisibility(View.INVISIBLE);
     }
 
     protected void fillSpinner() {
         ServerSQLiteHelper db = new ServerSQLiteHelper(this);
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         TextView tvConnectTo = (TextView) findViewById(R.id.tvConnectTo);
-        WebView webview = (WebView) findViewById(R.id.webView);
-        List<ServerDataPrivate> list = db.getAllServers();
+        List<ServerData> list = db.getAllServers();
         if (list.isEmpty()) {
             spinner.setVisibility(View.INVISIBLE);
             tvConnectTo.setVisibility(View.INVISIBLE);
-            webview.setVisibility(View.INVISIBLE);
         } else {
-            ArrayAdapter<ServerDataPrivate> dataAdapter = new ArrayAdapter<ServerDataPrivate>
+            ArrayAdapter<ServerData> dataAdapter = new ArrayAdapter<ServerData>
                     (this, android.R.layout.simple_spinner_item, list);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
         }
     }
 
-    public void AddHostClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), ServerActivityAdd.class);
-        startActivity(intent);
+    public void ConnectClick(View v) {
+        /*Intent intent = new Intent(getApplicationContext(), ServerActivityAdd.class);
+        startActivity(intent);*/
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        Log.v("demo", "aja esa era " + spinner.getSelectedItemId());
+
+        ServerSQLiteHelper dbinfo = new ServerSQLiteHelper(getBaseContext());
+        ServerData data = dbinfo.getServer(spinner.getSelectedItemId());
+
+        Log.v("demo", data.toString());
+
+        new openSSHConnection().execute(data);
+
     }
 
     @Override
@@ -92,49 +86,51 @@ public class ServerActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class openSSHConnection extends AsyncTask<ServerDataPrivate, Void, ServerDataPrivate> {
+    private class openSSHConnection extends AsyncTask<ServerData, Integer, ServerData> {
 
         @Override
-        protected ServerDataPrivate doInBackground(ServerDataPrivate... info) {
+        protected ServerData doInBackground(ServerData... info) {
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+            publishProgress(10);
             SSHConnection conn = new SSHConnection(info[0]);
-            info[0] = conn.CaptureOutput("free -m");
+            info[0].setMemRaw(conn.CaptureOutput("free -m"));
+            info[0].setUptime(conn.CaptureOutput("uptime"));
+            publishProgress(40);
             return info[0];
         }
 
         protected void onPostExecute(ServerData info) {
-            WebView webview = (WebView) findViewById(R.id.webView);
-            String content = "<html>"
-                    + "  <head>"
-                    + "    <script type='text/javascript' src='https://www.google.com/jsapi'></script>"
-                    + "    <script type=\"text/javascript\">"
-                    + "         google.load('visualization', '1', {packages:['corechart']});"
-                    + "         google.setOnLoadCallback(drawChart);"
-                    + "         function drawChart() { "
-                    + "             var data = google.visualization.arrayToDataTable([ "
-                    + "                     ['Memoria', 'en KBs'],"
-                    + "                     ['Total', " + info.getMemTotal() + "], "
-                    + "                     ['Libre', " + info.getMemFree() + "], "
-                    + "                     ['Cache', "   + info.getMemCache() + "] "
-                    + "                 ]); "
-                    + "             var options = { "
-                    + "                     legend: 'none', "
-                    + "                     pieSliceText: 'label', "
-                    + "                     title: 'Cantidad de memoria libre en el servidor', "
-                    + "                     pieStartAngle: 100, "
-                    + "                 }; "
-                    + "             var chart = new google.visualization.PieChart(document.getElementById('piechart')); "
-                    + "    </script>"
-                    + "  </head>"
-                    + "  <body>"
-                    + "    <div id='piechart' style='width: 49%; height: 100%; float:left;'></div>"
-                    + "  </body>" + "</html>";
-            Log.v("proceso",content);
-            WebSettings webSettings = webview.getSettings();
-            webSettings.setJavaScriptEnabled(true);
-            webview.requestFocusFromTouch();
-            webview.loadDataWithBaseURL( "file:///android_asset/", content, "text/html", "utf-8", null );
+
+            publishProgress(50);
+
+            TextView memtotal_tx = (TextView) findViewById(R.id.memtotal_tx);
+            TextView memfree_tx = (TextView) findViewById(R.id.memfree_tx);
+            TextView uptime_tx = (TextView) findViewById(R.id.uptime_tx);
+            //TextView cpu_tx = (TextView) findViewById(R.id.cpu_tx);
+
+            publishProgress(70);
+
+            memtotal_tx.setText(info.getMemTotal());
+            memfree_tx.setText(info.getMemFree());
+            uptime_tx.setText(info.getUptime());
+            info.getMemCache();
+
+            publishProgress(90);
+
+            TableLayout infopanel = (TableLayout) findViewById(R.id.infopanel);
+            infopanel.setVisibility(View.VISIBLE);
+            publishProgress(100);
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            //Log.v("Progreso",values[0].toString());
+            progressBar.setProgress(values[0]);
+
+        }
     }
 
 }

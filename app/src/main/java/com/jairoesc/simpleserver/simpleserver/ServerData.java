@@ -3,7 +3,12 @@ package com.jairoesc.simpleserver.simpleserver;
 /**
  * Created by jairo on 1/09/14.
  */
-public class ServerData extends ServerDataPrivate {
+public class ServerData {
+
+    private Integer id;
+    private String hostname;
+    private String username;
+    private String password;
 
     private String error;
     private String memRaw;
@@ -14,14 +19,48 @@ public class ServerData extends ServerDataPrivate {
     private String cpuTotal;
     private String cpuUsage;
 
+    public String getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
+    }
+
+    private String uptime;
+
     private boolean hostStatus;
 
+    public ServerData(String _hostname, String _username, String _password) {
+        setHostname(_hostname);
+        setUsername(_username);
+        setPassword(_password);
+    }
+
     ServerData() {
+        setHostname("");
+        setUsername("");
+        setPassword("");
         setMemFree("");
         setMemTotal("");
         setMemCache("");
         setCpuTotal("");
         setCpuUsage("");
+    }
+
+    public Integer getId() {
+
+        return id;
+    }
+
+    public void setId(Integer id) {
+
+        this.id = id;
+    }
+
+    public void setPassword(String password) {
+
+        this.password = password;
     }
 
     @Override
@@ -36,6 +75,7 @@ public class ServerData extends ServerDataPrivate {
     }
 
     public void setHostStatus(boolean hostStatus) {
+
         this.hostStatus = hostStatus;
     }
 
@@ -45,6 +85,7 @@ public class ServerData extends ServerDataPrivate {
     }
 
     public void setMemRaw(String memRaw) {
+
         String[] linea = memRaw.split("\n");
         linea[1] = linea[1].replaceAll("\\s+", " ");
         String[] linea_exp = linea[1].split(" ");
@@ -56,7 +97,7 @@ public class ServerData extends ServerDataPrivate {
 
     public String getMemFree() {
 
-        return memFree;
+        return this.toMem(memFree);
     }
 
     public void setMemFree(String memFree) {
@@ -66,7 +107,7 @@ public class ServerData extends ServerDataPrivate {
 
     public String getMemCache() {
 
-        return memCache;
+        return this.toMem(this.memCache);
     }
 
     public void setMemCache(String memCache) {
@@ -76,16 +117,29 @@ public class ServerData extends ServerDataPrivate {
 
     public String getMemTotal() {
 
-        return memTotal;
+        return this.toMem(memTotal);
     }
 
     public void setMemTotal(String memTotal) {
+
         this.memTotal = memTotal;
     }
 
     public String getHostname() {
 
         return hostname;
+    }
+
+    public String toMem(String mem){
+
+        Double tmp = Double.parseDouble(mem);
+
+        if(tmp>1000){
+            tmp = tmp/1024;
+            return String.format("%.2f",tmp)+" GB";
+        }else{
+            return String.format("%.2f",tmp)+" MB";
+        }
     }
 
     public void setHostname(String hostname) {
@@ -143,8 +197,8 @@ public class ServerData extends ServerDataPrivate {
         this.cpuTotal = cpuTotal;
     }
 
-    @Override
     public String getPassword() {
-        return null;
+
+        return password;
     }
 }

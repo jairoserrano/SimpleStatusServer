@@ -14,18 +14,19 @@ import java.io.InputStream;
  */
 public class SSHConnection {
 
-    ServerData _data;
-    ServerDataPrivate _server;
+    ServerData _server;
 
-    SSHConnection(ServerDataPrivate server){
+    String _error;
+
+    SSHConnection(ServerData server){
 
         this._server = server;
-        this._data = new ServerData();
-        this._data.setHostname(this._server.getHostname());
-        this._data.setUsername(this._server.getUsername());
     }
 
-    ServerData CaptureOutput(String command) {
+    String CaptureOutput(String command) {
+
+        String result = "";
+
         try {
             JSch jsch = new JSch();
 
@@ -49,26 +50,35 @@ public class SSHConnection {
                 while (in.available() > 0) {
                     int i = in.read(tmp, 0, 1024);
                     if (i < 0) break;
-                    _data.setMemRaw(new String(tmp, 0, i));
+                    result = new String(tmp, 0, i);
                 }
                 if (channel.isClosed()) {
                     if (in.available() > 0) continue;
-                    _data.setError("exit-status: " + channel.getExitStatus());
+                    set_error("exit-status: " + channel.getExitStatus());
                     break;
                 }
                 try {
                     Thread.sleep(1000);
                 } catch (Exception e) {
-                    _data.setError(e.getMessage());
+                    set_error(e.getMessage());
                 }
             }
             channel.disconnect();
             session.disconnect();
         } catch (JSchException e) {
-            _data.setError(e.getMessage());
+            set_error(e.getMessage());
         } catch (IOException e) {
-            _data.setError(e.getMessage());
+            set_error(e.getMessage());
         }
-        return _data;
+        return result;
     }
+
+    public String get_error() {
+        return _error;
+    }
+
+    public void set_error(String _error) {
+        this._error += _error;
+    }
+
 }

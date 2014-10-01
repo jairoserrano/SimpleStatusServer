@@ -43,7 +43,7 @@ public class ServerActivityAdd extends Activity {
             ServerSQLiteHelper db = new ServerSQLiteHelper(this);
             //Creación en la DB del hostna
             // me
-            db.createServer(new ServerDataPrivate(hostname, username, password));
+            db.createServer(new ServerData(hostname, username, password));
             //forma correcta de cerrar una actividad.
             finish();
         }
